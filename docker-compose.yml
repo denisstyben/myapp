@@ -1,0 +1,23 @@
+yaml 
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:5000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/counter
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=counter
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
